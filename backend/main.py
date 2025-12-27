@@ -46,9 +46,10 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Health check endpoint for monitoring"""
+    from datetime import datetime
     return {
         "status": "healthy",
-        "timestamp": "2024-01-01T00:00:00Z"  # TODO: Add real timestamp
+        "timestamp": datetime.utcnow().isoformat() + "Z"
     }
 
 

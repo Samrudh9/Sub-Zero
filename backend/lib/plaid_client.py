@@ -213,7 +213,8 @@ class PlaidClient:
             # Simple heuristic: same amount, multiple occurrences
             if len(set(amounts)) == 1 and len(charges) >= 2:
                 # Calculate average interval between charges
-                dates = [datetime.fromisoformat(c['date']) for c in charges]
+                from datetime import datetime
+                dates = [datetime.strptime(c['date'], '%Y-%m-%d') if isinstance(c['date'], str) else c['date'] for c in charges]
                 intervals = [(dates[i+1] - dates[i]).days for i in range(len(dates)-1)]
                 avg_interval = sum(intervals) / len(intervals) if intervals else 0
                 

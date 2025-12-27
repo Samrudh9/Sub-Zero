@@ -44,9 +44,18 @@ class CredentialVault:
         
         if not key:
             # Development fallback - derive from password
-            # WARNING: This is NOT secure for production!
-            password = os.getenv('CREDENTIAL_MASTER_PASSWORD', 'dev-password-change-me')
-            salt = b'subzero-vault-salt'  # In prod, use unique salt per user
+            # WARNING: In production, use AWS KMS or Secrets Manager
+            # This fallback should NEVER be used in production
+            password = os.getenv('CREDENTIAL_MASTER_PASSWORD')
+            if not password:
+                raise ValueError(
+                    "CREDENTIAL_ENCRYPTION_KEY or CREDENTIAL_MASTER_PASSWORD must be set. "
+                    "Never use default passwords in any environment."
+                )
+            
+            # Use a user-specific salt (in real implementation, store per user)
+            # For now, using a fixed salt only for development/testing
+            salt = b'subzero-dev-salt-replace-in-prod'
             
             kdf = PBKDF2(
                 algorithm=hashes.SHA256(),
