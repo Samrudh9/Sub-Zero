@@ -23,6 +23,10 @@ MANIFEST
 
 # Virtual environments
 venv/
+env/
+ENV/
+env.bak/
+venv.bak/
 ENV/
 env/
 
@@ -37,6 +41,22 @@ env/
 .DS_Store
 Thumbs.db
 
+# Environment variables
+.env
+.env.local
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
 # Temporary files
 /tmp/
 *.log
