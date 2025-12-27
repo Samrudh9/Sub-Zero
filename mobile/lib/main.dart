@@ -22,7 +22,6 @@ class SubZeroApp extends StatelessWidget {
           primary: Colors.cyan,
           secondary: Colors.cyanAccent,
           surface: const Color(0xFF1D1E33),
-          background: const Color(0xFF0A0E21),
         ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
