@@ -1,6 +1,6 @@
-import 'package:flutter/material. dart';
-import 'package: flutter_card_swiper/flutter_card_swiper.dart';
-import '../models/subscription. dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import '../models/subscription.dart';
 import '../services/cancellation_service.dart';
 
 class SwipeScreen extends StatefulWidget {
@@ -48,7 +48,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons. history, color: Colors.grey),
+            icon: const Icon(Icons.history, color: Colors.grey),
             onPressed: () => Navigator.pushNamed(context, '/graveyard'),
           )
         ],
@@ -141,18 +141,18 @@ class _SwipeScreenState extends State<SwipeScreen> {
             
             // Service name
             Text(
-              sub. name,
+              sub.name,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 28,
-                fontWeight: FontWeight. bold,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 8),
             
             // Monthly cost
             Text(
-              '\$${sub.monthlyPrice. toStringAsFixed(2)}/month',
+              '\$${sub.monthlyPrice.toStringAsFixed(2)}/month',
               style: const TextStyle(
                 color: Colors.cyan,
                 fontSize: 24,
@@ -162,7 +162,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
             Text(
               '\$${(sub.monthlyPrice * 12).toStringAsFixed(2)}/year',
               style: TextStyle(
-                color: Colors. grey[500],
+                color: Colors.grey[500],
                 fontSize: 16,
               ),
             ),
@@ -175,9 +175,9 @@ class _SwipeScreenState extends State<SwipeScreen> {
             ),
             
             // Usage indicator (if available)
-            if (sub. usageScore != null) ...[
+            if (sub.usageScore != null) ...[
               const SizedBox(height: 16),
-              _buildUsageIndicator(sub. usageScore! ),
+              _buildUsageIndicator(sub.usageScore!),
             ],
           ],
         ),
@@ -186,7 +186,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
   }
 
   Widget _buildUsageIndicator(double score) {
-    final color = score > 0. 7 ? Colors.green : score > 0.3 ? Colors.orange : Colors.red;
+    final color = score > 0.7 ? Colors.green : score > 0.3 ? Colors.orange : Colors.red;
     final label = score > 0.7 ? 'High Usage' : score > 0.3 ? 'Medium Usage' : 'Rarely Used';
     
     return Row(
@@ -194,24 +194,24 @@ class _SwipeScreenState extends State<SwipeScreen> {
       children: [
         Icon(Icons.analytics, color: color, size: 16),
         const SizedBox(width: 4),
-        Text(label, style: TextStyle(color:  color)),
+        Text(label, style: TextStyle(color: color)),
       ],
     );
   }
 
   Future<bool> _onSwipe(
     int previousIndex,
-    int?  currentIndex,
+    int? currentIndex,
     CardSwiperDirection direction,
   ) async {
     final subscription = subscriptions[previousIndex];
     
-    if (direction == CardSwiperDirection. left) {
+    if (direction == CardSwiperDirection.left) {
       // KILL - Trigger cancellation workflow
       await _showCancellationDialog(subscription);
     } else {
       // KEEP - Mark as keeper
-      await _cancellationService.markAsKeeper(subscription. id);
+      await _cancellationService.markAsKeeper(subscription.id);
     }
     
     return true;
@@ -222,7 +222,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: Colors.grey[900],
-        title: Text('Cancel ${sub.name}?', style: const TextStyle(color: Colors. white)),
+        title: Text('Cancel ${sub.name}?', style: const TextStyle(color: Colors.white)),
         content: Text(
           'Sub-Zero will log in and cancel this for you. '
           'You may need to provide a verification code.',
