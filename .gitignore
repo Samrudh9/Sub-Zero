@@ -10,6 +10,7 @@ dist/
 downloads/
 eggs/
 .eggs/
+lib/
 lib64/
 parts/
 sdist/
@@ -26,6 +27,8 @@ env/
 ENV/
 env.bak/
 venv.bak/
+ENV/
+env/
 
 # IDEs
 .vscode/
@@ -54,3 +57,9 @@ htmlcov/
 tmp/
 temp/
 *.tmp
+# Temporary files
+/tmp/
+*.log
+
+# Proofs
+proofs/
