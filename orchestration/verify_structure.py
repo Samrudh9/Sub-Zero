@@ -58,7 +58,7 @@ print("=" * 60)
 print("Sub-Zero Temporal Activities - Structure Verification")
 print("=" * 60)
 
-base_dir = "/home/runner/work/Sub-Zero/Sub-Zero/orchestration"
+base_dir = os.path.dirname(os.path.abspath(__file__))
 all_passed = True
 
 print("\n1. Checking package structure...")
