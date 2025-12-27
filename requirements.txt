@@ -1,0 +1,37 @@
+# Sub-Zero Agent Dependencies
+# Python 3.11+ required
+
+# AI & LLM
+langchain>=0.1.0
+langchain-anthropic>=0.1.0
+langchain-core>=0.1.0
+anthropic>=0.18.0
+
+# Browser Automation
+browser-use>=0.1.0
+playwright>=1.40.0
+
+# Workflow Orchestration
+temporalio>=1.4.0
+
+# Async & HTTP
+aiohttp>=3.9.0
+httpx>=0.26.0
+
+# Environment & Config
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# Image Processing (for screenshots)
+Pillow>=10.0.0
+
+# Utilities
+tenacity>=8.2.0  # Retry logic
+structlog>=24.1.0  # Structured logging
+
+# Development
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+black>=24.1.0
+ruff>=0.1.0
