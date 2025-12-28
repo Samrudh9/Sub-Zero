@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # Temporal Server (Workflow Orchestration)
+  temporal:
+    image: temporalio/auto-setup:latest
+    ports:
+      - "7233:7233"   # gRPC
+      - "8233:8233"   # Web UI
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgres
+    depends_on:
+      - postgres
+
+  # PostgreSQL (for Temporal)
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: temporal
+      POSTGRES_DB: temporal
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Sub-Zero Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - PLAID_CLIENT_ID=${PLAID_CLIENT_ID}
+      - PLAID_SECRET=${PLAID_SECRET}
+      - TEMPORAL_HOST=temporal:7233
+    depends_on:
+      - temporal
+    volumes:
+      - ./backend:/app
+
+  # Sub-Zero Agent Worker
+  agent:
+    build:
+      context: .
+      dockerfile: agent/Dockerfile
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - STEEL_CDP_URL=${STEEL_CDP_URL}
+      - TEMPORAL_HOST=temporal:7233
+    depends_on:
+      - temporal
+    volumes:
+      - ./agent:/app/agent
+      - ./orchestration:/app/orchestration
+
+volumes:
+  postgres_data:
